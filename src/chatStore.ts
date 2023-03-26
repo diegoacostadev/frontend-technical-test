@@ -1,7 +1,7 @@
-import { Conversation } from "@/types/conversation";
-import { Message } from "@/types/message";
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import {create} from "zustand";
+import {devtools} from "zustand/middleware";
+
+import {Conversation} from "@/types/conversation";
 
 interface ChatState {
   user: number | null;
@@ -30,25 +30,27 @@ export const useChatStore = create<ChatState>()(
         const filtered = conv.filter(
           (c) =>
             c.recipientNickname.toLowerCase().includes(k) ||
-            c.senderNickname.toLowerCase().includes(k)
+            c.senderNickname.toLowerCase().includes(k),
         );
-        set({ filteredConversations: filtered });
+
+        set({filteredConversations: filtered});
       },
       setActiveConversation: (id) => {
         const active = get().conversations.find((c) => c.id == id);
-        set({ activeConversation: active });
+
+        set({activeConversation: active});
       },
       addConversation: (c) => {
-        set({ conversations: [c, ...get().conversations] });
+        set({conversations: [c, ...get().conversations]});
       },
-      setUser: (user) => set({ user }),
+      setUser: (user) => set({user}),
       setConversations: (conversations) => {
-        set({ conversations });
-        set({ filteredConversations: conversations });
+        set({conversations});
+        set({filteredConversations: conversations});
       },
     }),
     {
       name: "chat-storage",
-    }
-  )
+    },
+  ),
 );
