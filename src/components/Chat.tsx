@@ -9,19 +9,13 @@ import {fetcher} from "@/utils/fetcher";
 export default function Chat() {
   const [message, setMessage] = useState<string>("");
   const {activeConversation, user} = useChatStore();
-  const {
-    data: messages,
-    error,
-    mutate,
-  } = useSWR(
+  const {data: messages, mutate} = useSWR(
     activeConversation ? `http://localhost:3005/messages/${activeConversation.id}` : null,
     fetcher,
     {
       refreshInterval: 5000,
     },
   );
-
-  console.log(mutate);
 
   useEffect(() => {
     (async function () {
